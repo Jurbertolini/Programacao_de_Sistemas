@@ -25,6 +25,7 @@ _start:
     mov ebx, 0 
     mov ecx, char
     mov edx, 1 
+
     int 80h
     
 ; ler n2    
@@ -35,7 +36,7 @@ _start:
     
     int 80h
 
-; coverter n1 e n2 de ascii
+; converter n1 e n2 de ascii
     mov al, [n1]
     sub al, '0'
     mov bl, al
@@ -59,7 +60,6 @@ _start:
 
 Soma:
     add al, bl
-
     jmp Print_resultado
     
 Subtracao:
