@@ -11,10 +11,10 @@ section .data
     quebra db 0xa
     
 section .bss
-    n1 resb 1
-    n2 resb 1
+    n1 resb 2
+    n2 resb 2
     char resb 2
-    resultado resb 1
+    resultado resb 2
     
 section .text
     global _start
@@ -33,6 +33,13 @@ _start:
     mov ecx, n1
     mov edx, 1 
     
+    int 80h
+    
+;consumir o enter
+    mov eax, 3 
+    mov ebx, 0 
+    mov ecx, char
+    mov edx, 1 
     int 80h
     
 ;quebra
@@ -58,6 +65,12 @@ _start:
     mov edx, 1 
     
     int 80h
+
+;consumir o enter
+    mov eax, 3 
+    mov ebx, 0 
+    mov ecx, char 
+    mov edx, 1
     
 ;print n2
     mov eax, 4
@@ -74,6 +87,7 @@ _start:
     mov edx, 1
     
     int 80h
+    
 Fim_programa:
     mov eax, 1
     mov ebx, 0
