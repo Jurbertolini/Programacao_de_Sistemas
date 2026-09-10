@@ -1,14 +1,6 @@
 section .data
-    msg_1 db "Digite o N1: "
-    len_msg1 equ $-msg_1
-    
-    msg_2 db "Digite o N2: "
-    len_msg2 equ $-msg_2
-    
-    msg_3 db "Digite a Operacao (+, -, *, /): "
-    len_msg3 equ $-msg_3
-    
-    quebra db 0xa
+    msg db "Resultado: "
+    len_msg equ $-msg
     
 section .bss
     n1 resb 2
@@ -20,13 +12,6 @@ section .text
     global _start
     
 _start:
-;print msg 1
-    mov eax, 4
-    mov ebx, 1 
-    mov ecx, msg_1
-    mov edx, len_msg1
-    
-    int 0x80
 ;ler n1    
     mov eax, 3
     mov ebx, 0 
@@ -35,28 +20,12 @@ _start:
     
     int 80h
     
-;consumir o enter
+;ler char
     mov eax, 3 
     mov ebx, 0 
     mov ecx, char
     mov edx, 1 
     int 80h
-    
-;quebra
-    mov eax, 4
-    mov ebx, 1 
-    mov ecx, quebra
-    mov edx, 1
-  
-    int 80h
-    
-;print msg 2    
-    mov eax, 4
-    mov ebx, 1 
-    mov ecx, msg_2
-    mov edx, len_msg2
-    
-    int 0x80
     
 ; ler n2    
     mov eax, 3
@@ -66,24 +35,59 @@ _start:
     
     int 80h
 
-;consumir o enter
-    mov eax, 3 
-    mov ebx, 0 
-    mov ecx, char 
-    mov edx, 1
+; coverter n1 e n2 de ascii
+    mov al, [n1]
+    sub al, '0'
+    mov bl, al
     
-;print n2
+    mov al, [n2]
+    sub al, '0'
+    
+; comparar operador
+
+    cmp byte [char], '+'
+    je Soma
+    
+    cmp byte [char], '-'
+    je Subtracao
+    
+    cmp byte [char], '/' 
+    je Divisao
+    
+    cmp byte [char], '*'
+    je Multiplicacao
+
+Soma:
+    add al, bl
+
+    jmp Print_resultado
+    
+Subtracao:
+    sub al, bl
+    jmp Print_resultado
+    
+Divisao:
+    div bl
+    jmp Print_resultado
+
+Multiplicacao:
+    mul bl
+    jmp Print_resultado
+
+Print_resultado:  
+    add al, '0'
+    mov [resultado],  al
+    
     mov eax, 4
     mov ebx, 1 
-    mov ecx, n2
-    mov edx, 1 
+    mov ecx, msg
+    mov edx, len_msg
     
     int 80h
     
-;print n1
     mov eax, 4
     mov ebx, 1 
-    mov ecx, n1
+    mov ecx, resultado
     mov edx, 1
     
     int 80h
