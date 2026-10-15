@@ -1,0 +1,13 @@
+PONTO 1:
+main -> int num1, int num2, int res
+soma -> int n1, int n2, int resultado
+
+
+PONTO 2: 
+main -> int num1, int num2, int res
+soma -> int n1, int n2, int resultado
+printf -> int n1, int n2, variáveis de printar
+
+PONTO 3:
+main -> int num1, int num2, int res
+printf-> int res, variáveis de printar
